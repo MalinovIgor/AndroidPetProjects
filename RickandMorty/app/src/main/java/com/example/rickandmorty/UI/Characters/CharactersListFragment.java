@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -44,9 +46,17 @@ public class CharactersListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         ListCharactersViewModel itemViewModel = ViewModelProviders.of(this).get(ListCharactersViewModel.class);
-        final CharactersAdapter adapter = new CharactersAdapter(Glide.with(v.getContext()));
+        final CharactersAdapter adapter = new CharactersAdapter(Glide.with(v.getContext()),
+                character -> {
+                    CharacterInfoFragment fragment =
+                            CharacterInfoFragment.getInstance(character);
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                });
 
-        itemViewModel.itemPagedList.observe(this, adapter::submitList);
+        itemViewModel.itemPagedList.observe(getViewLifecycleOwner(), adapter::submitList);
 
         recyclerView.setAdapter(adapter);
 

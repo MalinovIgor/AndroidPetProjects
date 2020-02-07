@@ -9,4 +9,9 @@
     <string name="tab_label1">Characters</string>
     <string name="tab_label2">Locations</string>
     <string name="tab_label3">Episodes</string>
+    <string name="status">Status:</string>
+    <string name="species">Species:</string>
+    <string name="gender">Gender:</string>
+    <string name="origin">Origin:</string>
+    <string name="location">Location:</string>
 </resources>
