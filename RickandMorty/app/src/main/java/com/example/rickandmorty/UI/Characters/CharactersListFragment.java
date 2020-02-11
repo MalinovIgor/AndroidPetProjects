@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.ViewModel.ListCharactersViewModel;
-import com.example.rickandmorty.ViewModel.ListLocationsViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +46,7 @@ public class CharactersListFragment extends Fragment {
         ListCharactersViewModel itemViewModel = ViewModelProviders.of(this).get(ListCharactersViewModel.class);
         final CharactersAdapter adapter = new CharactersAdapter(Glide.with(v.getContext()),
                 character -> {
+                    ((FloatingActionButton)getActivity().findViewById(R.id.fab)).hide();
                     CharacterInfoFragment fragment =
                             CharacterInfoFragment.getInstance(character);
                     getActivity().getSupportFragmentManager().beginTransaction()

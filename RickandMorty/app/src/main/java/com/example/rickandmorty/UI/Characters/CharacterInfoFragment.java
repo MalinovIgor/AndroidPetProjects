@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.rickandmorty.Data.Network.Character.TheCharacter;
 import com.example.rickandmorty.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,5 +54,11 @@ public class CharacterInfoFragment extends Fragment {
             ((TextView)v.findViewById(R.id.origin)).setText(character.getOrigin().getName());
             ((TextView)v.findViewById(R.id.location)).setText(character.getLocation().getName());
         }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        ((FloatingActionButton)getActivity().findViewById(R.id.fab)).show();
     }
 }

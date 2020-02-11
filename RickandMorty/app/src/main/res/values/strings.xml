@@ -14,4 +14,15 @@
     <string name="gender">Gender:</string>
     <string name="origin">Origin:</string>
     <string name="location">Location:</string>
+    <string-array name="character_status_array">
+        <item>Alive</item>
+        <item>Dead</item>
+        <item>Unknown</item>
+    </string-array>
+    <string-array name="character_gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Genderless</item>
+        <item>Unknown</item>
+    </string-array>
 </resources>

@@ -3,8 +3,11 @@ package com.example.rickandmorty.UI;
 import android.os.Bundle;
 
 import com.example.rickandmorty.R;
+import com.example.rickandmorty.UI.Characters.CharactersFilterBottomSheet;
 import com.example.rickandmorty.UI.Characters.CharactersListFragment;
+import com.example.rickandmorty.UI.Episodes.EpisodesFilterBottomSheet;
 import com.example.rickandmorty.UI.Episodes.EpisodesListFragment;
+import com.example.rickandmorty.UI.Locations.LocationsFilterBottomSheet;
 import com.example.rickandmorty.UI.Locations.LocationsListFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,6 +25,9 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TabLayout mTabLayout;
+    private FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +35,32 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+
+//        FragmentManager fm = getSupportFragmentManager();
+//        fm.beginTransaction().add(R.id.fragment, CharactersListFragment.getInstance()).commit();
+
+        setupTabLayout();
+        fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                switch (mTabLayout.getSelectedTabPosition()) {
+                    case 0:
+                        CharactersFilterBottomSheet bottomSheetFragment = new CharactersFilterBottomSheet();
+                        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                        break;
+                    case 1:
+                        LocationsFilterBottomSheet bottomSheetFragment1 = new LocationsFilterBottomSheet();
+                        bottomSheetFragment1.show(getSupportFragmentManager(), bottomSheetFragment1.getTag());
+                        break;
+                    case 2:
+                        EpisodesFilterBottomSheet bottomSheetFragment2 = new EpisodesFilterBottomSheet();
+                        bottomSheetFragment2.show(getSupportFragmentManager(), bottomSheetFragment2.getTag());
+                        break;
+                }
             }
         });
-//        FragmentManager fm = getSupportFragmentManager();
-//        fm.beginTransaction().add(R.id.fragment, CharactersListFragment.getInstance()).commit();
-        setupTabLayout();
+
     }
 
     @Override
@@ -64,18 +85,18 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setupTabLayout(){
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_label1));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_label2));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_label3));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    private void setupTabLayout() {
+        mTabLayout = findViewById(R.id.tab_layout);
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_label1));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_label2));
+        mTabLayout.addTab(mTabLayout.newTab().setText(R.string.tab_label3));
+        mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager = findViewById(R.id.pager);
-        final PageAdapter adapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        final PageAdapter adapter = new PageAdapter(getSupportFragmentManager(), mTabLayout.getTabCount());
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new
-                TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
