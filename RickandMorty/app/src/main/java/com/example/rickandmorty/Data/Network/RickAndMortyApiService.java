@@ -10,7 +10,9 @@ import retrofit2.http.Query;
 
 public interface RickAndMortyApiService {
     @GET("character")
-    Call<ResponseResult<TheCharacter>> getCharacters(@Query("page") int page);
+    Call<ResponseResult<TheCharacter>> getCharacters(@Query("page") int page, @Query("name") String name,
+                                                     @Query("species") String species, @Query("gender") String gender,
+                                                     @Query("status") String status);
 
     @GET("location")
     Call<ResponseResult<Location>> getLocations(@Query("page") int page);

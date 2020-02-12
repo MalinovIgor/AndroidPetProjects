@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +17,8 @@ import com.bumptech.glide.Glide;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.ViewModel.ListCharactersViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,10 +47,16 @@ public class CharactersListFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setHasFixedSize(true);
 
-        ListCharactersViewModel itemViewModel = ViewModelProviders.of(this).get(ListCharactersViewModel.class);
+        ListCharactersViewModel itemViewModel = new ViewModelProvider(requireActivity()).get(ListCharactersViewModel.class);
+        itemViewModel.query.setValue(new Hashtable<String, String>() {{
+            put("name", "");
+            put("species", "");
+            put("gender", "");
+            put("status", "");
+        }});
         final CharactersAdapter adapter = new CharactersAdapter(Glide.with(v.getContext()),
                 character -> {
-                    ((FloatingActionButton)getActivity().findViewById(R.id.fab)).hide();
+                    ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
                     CharacterInfoFragment fragment =
                             CharacterInfoFragment.getInstance(character);
                     getActivity().getSupportFragmentManager().beginTransaction()

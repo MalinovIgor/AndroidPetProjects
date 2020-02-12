@@ -41,23 +41,20 @@ public class MainActivity extends AppCompatActivity {
 
         setupTabLayout();
         fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (mTabLayout.getSelectedTabPosition()) {
-                    case 0:
-                        CharactersFilterBottomSheet bottomSheetFragment = new CharactersFilterBottomSheet();
-                        bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
-                        break;
-                    case 1:
-                        LocationsFilterBottomSheet bottomSheetFragment1 = new LocationsFilterBottomSheet();
-                        bottomSheetFragment1.show(getSupportFragmentManager(), bottomSheetFragment1.getTag());
-                        break;
-                    case 2:
-                        EpisodesFilterBottomSheet bottomSheetFragment2 = new EpisodesFilterBottomSheet();
-                        bottomSheetFragment2.show(getSupportFragmentManager(), bottomSheetFragment2.getTag());
-                        break;
-                }
+        fab.setOnClickListener(view -> {
+            switch (mTabLayout.getSelectedTabPosition()) {
+                case 0:
+                    CharactersFilterBottomSheet bottomSheetFragment = new CharactersFilterBottomSheet();
+                    bottomSheetFragment.show(getSupportFragmentManager(), bottomSheetFragment.getTag());
+                    break;
+                case 1:
+                    LocationsFilterBottomSheet bottomSheetFragment1 = new LocationsFilterBottomSheet();
+                    bottomSheetFragment1.show(getSupportFragmentManager(), bottomSheetFragment1.getTag());
+                    break;
+                case 2:
+                    EpisodesFilterBottomSheet bottomSheetFragment2 = new EpisodesFilterBottomSheet();
+                    bottomSheetFragment2.show(getSupportFragmentManager(), bottomSheetFragment2.getTag());
+                    break;
             }
         });
 

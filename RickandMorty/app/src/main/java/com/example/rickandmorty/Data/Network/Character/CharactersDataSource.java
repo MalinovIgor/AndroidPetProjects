@@ -9,6 +9,8 @@ import com.example.rickandmorty.Data.Network.Character.CharacterResult;
 import com.example.rickandmorty.Data.Network.Character.TheCharacter;
 import com.example.rickandmorty.Data.Network.ResponseResult;
 
+import java.util.Dictionary;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,6 +20,11 @@ public class CharactersDataSource extends PageKeyedDataSource<Integer, TheCharac
 
     public static final int PAGE_SIZE = 20;
     private static final int FIRST_PAGE = 1;
+    private Dictionary<String, String> query;
+
+    public  CharactersDataSource(Dictionary<String, String> query){
+        this.query = query;
+    }
 
 
     @Override
@@ -25,7 +32,8 @@ public class CharactersDataSource extends PageKeyedDataSource<Integer, TheCharac
 
         ApiClient.getInstance()
                 .getApi()
-                .getCharacters(FIRST_PAGE)
+                .getCharacters(FIRST_PAGE, query.get("name"), query.get("species"),
+                        query.get("gender"), query.get("status"))
                 .enqueue(new Callback<ResponseResult<TheCharacter>>() {
                     @Override
                     @EverythingIsNonNull
@@ -55,7 +63,8 @@ public class CharactersDataSource extends PageKeyedDataSource<Integer, TheCharac
 
         ApiClient.getInstance()
                 .getApi()
-                .getCharacters(params.key)
+                .getCharacters(params.key, query.get("name"), query.get("species"),
+                        query.get("gender"), query.get("status"))
                 .enqueue(new Callback<ResponseResult<TheCharacter>>() {
                     @Override
                     @EverythingIsNonNull

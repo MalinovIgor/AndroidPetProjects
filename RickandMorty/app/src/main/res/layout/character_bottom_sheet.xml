@@ -14,57 +14,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Filter"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_margin="8dp"/>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/ch_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
 
         <EditText
             android:id="@+id/name"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter name"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_margin="8dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/ch_species"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
 
         <EditText
             android:id="@+id/species"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter species" />
-    </LinearLayout>
+            android:hint="Enter species"
+            android:layout_margin="8dp"/>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/ch_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+        android:orientation="horizontal"
+        android:layout_margin="8dp">
 
         <TextView
             android:id="@+id/status"
@@ -77,19 +51,14 @@
             android:id="@+id/sp_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"/>
+            android:layout_marginStart="8dp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/ch_gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+        android:orientation="horizontal"
+        android:layout_margin="8dp">
 
         <TextView
             android:id="@+id/gender"
@@ -102,13 +71,13 @@
             android:id="@+id/sp_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
+            android:layout_marginStart="8dp" />
     </LinearLayout>
 
     <Button
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/gender"
         android:layout_marginTop="16dp"
         android:background="@color/colorPrimary"
         android:text="Filter"

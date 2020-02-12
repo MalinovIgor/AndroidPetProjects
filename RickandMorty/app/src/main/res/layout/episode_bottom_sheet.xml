@@ -17,44 +17,23 @@
         android:textSize="24sp" />
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/ch_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
-
         <EditText
             android:id="@+id/name"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter name"
-            android:layout_weight="1"/>
-    </LinearLayout>
+            android:layout_margin="8dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/ch_episode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp" />
 
         <EditText
             android:id="@+id/episode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter episode's code" />
-    </LinearLayout>
+            android:hint="Enter episode's code"
+            android:layout_margin="8dp"/>
 
     <Button
+        android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/gender"
