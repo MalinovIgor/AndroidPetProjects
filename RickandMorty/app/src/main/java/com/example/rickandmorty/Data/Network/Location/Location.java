@@ -1,8 +1,5 @@
 package com.example.rickandmorty.Data.Network.Location;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,6 +8,9 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Location implements Parcelable {
 
@@ -128,6 +128,19 @@ public class Location implements Parcelable {
 
         Location theCharacter = (Location) obj;
         return theCharacter.id.equals(this.id);
+    }
+
+    public String getResidentsIds() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (String theCharUrl :
+                residents) {
+            sb.append(theCharUrl.split("/")[5]);
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]");
+        return sb.toString();
     }
 
 }

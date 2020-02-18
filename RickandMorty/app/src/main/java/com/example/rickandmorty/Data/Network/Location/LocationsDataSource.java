@@ -2,10 +2,13 @@ package com.example.rickandmorty.Data.Network.Location;
 
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 import com.example.rickandmorty.Data.Network.ApiClient;
 import com.example.rickandmorty.Data.Network.ResponseResult;
+
+import java.util.Dictionary;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,6 +19,13 @@ public class LocationsDataSource extends PageKeyedDataSource<Integer, Location> 
 
     public static final int PAGE_SIZE = 20;
     private static final int FIRST_PAGE = 1;
+    private Dictionary<String, String> query;
+    public MutableLiveData<Integer> count;
+
+    public  LocationsDataSource(Dictionary<String, String> query, MutableLiveData<Integer> count){
+        this.query = query;
+        this.count = count;
+    }
 
 
     @Override
@@ -23,13 +33,14 @@ public class LocationsDataSource extends PageKeyedDataSource<Integer, Location> 
 
         ApiClient.getInstance()
                 .getApi()
-                .getLocations(FIRST_PAGE)
+                .getLocations(FIRST_PAGE, query.get("name"), query.get("species"),
+                        query.get("dimension"))
                 .enqueue(new Callback<ResponseResult<Location>>() {
                     @Override
                     @EverythingIsNonNull
                     public void onResponse(Call<ResponseResult<Location>> call, Response<ResponseResult<Location>> response) {
                         if (response.body() != null) {
-
+                            count.setValue(response.body().getInfo().getCount());
                             callback.onResult(response.body().getResults(), null, FIRST_PAGE + 1);
                         }
                     }
@@ -53,7 +64,8 @@ public class LocationsDataSource extends PageKeyedDataSource<Integer, Location> 
 
         ApiClient.getInstance()
                 .getApi()
-                .getLocations(params.key)
+                .getLocations(params.key, query.get("name"), query.get("type"),
+                        query.get("dimension"))
                 .enqueue(new Callback<ResponseResult<Location>>() {
                     @Override
                     @EverythingIsNonNull
@@ -72,7 +84,5 @@ public class LocationsDataSource extends PageKeyedDataSource<Integer, Location> 
 
                     }
                 });
-
-
     }
 }

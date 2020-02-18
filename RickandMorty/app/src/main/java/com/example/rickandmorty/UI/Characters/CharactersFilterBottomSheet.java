@@ -14,7 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.ViewModel.ListCharactersViewModel;
+import com.example.rickandmorty.ViewModel.Character.ListCharactersViewModel;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Hashtable;
@@ -72,7 +72,7 @@ public class CharactersFilterBottomSheet extends BottomSheetDialogFragment imple
         String species = this.species.getText().toString();
         String gender = this.gender.getSelectedItem().toString().equals("Unselected")?"":this.gender.getSelectedItem().toString();
         String status = this.status.getSelectedItem().toString().equals("Unselected")?"":this.status.getSelectedItem().toString();
-        model.query.setValue(new Hashtable<String, String>(){{
+        model.setQuery(new Hashtable<String, String>(){{
             put("name", name);
             put("species", species);
             put("gender", gender);

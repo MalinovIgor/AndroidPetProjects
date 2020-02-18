@@ -1,6 +1,9 @@
-package com.example.rickandmorty.ViewModel;
+package com.example.rickandmorty.ViewModel.Episode;
 
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
@@ -10,15 +13,18 @@ import com.example.rickandmorty.Data.Network.Episode.Episode;
 import com.example.rickandmorty.Data.Network.Episode.EpisodesDataSource;
 import com.example.rickandmorty.Data.Network.Episode.EpisodesDataSourceFactory;
 
+import java.util.Dictionary;
+
 public class ListEpisodesViewModel extends ViewModel {
 
     public LiveData<PagedList<Episode>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, Episode>> liveDataSource;
 
-    public ListEpisodesViewModel() {
+    public final MutableLiveData<Dictionary<String, String>> query =
+            new MutableLiveData<>();
+    public MutableLiveData<Integer> count = new MutableLiveData<>();
 
-        EpisodesDataSourceFactory itemDataSourceFactory = new EpisodesDataSourceFactory();
-        liveDataSource = itemDataSourceFactory.getEpisodeLiveDataSource();
+    public ListEpisodesViewModel() {
 
         PagedList.Config config =
                 (new PagedList.Config.Builder())
@@ -26,7 +32,11 @@ public class ListEpisodesViewModel extends ViewModel {
                         .setPageSize(EpisodesDataSource.PAGE_SIZE)
                         .build();
 
-        itemPagedList = (new LivePagedListBuilder(itemDataSourceFactory, config)).build();
+        itemPagedList = Transformations.switchMap(query, (Function<Dictionary<String, String>, LiveData<PagedList<Episode>>>) input -> {
+            EpisodesDataSourceFactory itemDataSourceFactory = new EpisodesDataSourceFactory(input, count);
+            liveDataSource = itemDataSourceFactory.getEpisodeLiveDataSource();
+            return new LivePagedListBuilder(itemDataSourceFactory, config).build();
+        });
 
     }
 }

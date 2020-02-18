@@ -2,10 +2,13 @@ package com.example.rickandmorty.Data.Network.Episode;
 
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 import com.example.rickandmorty.Data.Network.ApiClient;
 import com.example.rickandmorty.Data.Network.ResponseResult;
+
+import java.util.Dictionary;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,6 +19,13 @@ public class EpisodesDataSource extends PageKeyedDataSource<Integer, Episode> {
 
     public static final int PAGE_SIZE = 20;
     private static final int FIRST_PAGE = 1;
+    private Dictionary<String, String> query;
+    public MutableLiveData<Integer> count;
+
+    public  EpisodesDataSource(Dictionary<String, String> query, MutableLiveData<Integer> count){
+        this.query = query;
+        this.count = count;
+    }
 
 
     @Override
@@ -23,13 +33,13 @@ public class EpisodesDataSource extends PageKeyedDataSource<Integer, Episode> {
 
         ApiClient.getInstance()
                 .getApi()
-                .getEpisodes(FIRST_PAGE)
+                .getEpisodes(FIRST_PAGE, query.get("name"), query.get("episode"))
                 .enqueue(new Callback<ResponseResult<Episode>>() {
                     @Override
                     @EverythingIsNonNull
                     public void onResponse(Call<ResponseResult<Episode>> call, Response<ResponseResult<Episode>> response) {
                         if (response.body() != null) {
-
+                            count.setValue(response.body().getInfo().getCount());
                             callback.onResult(response.body().getResults(), null, FIRST_PAGE + 1);
                         }
                     }
@@ -53,7 +63,7 @@ public class EpisodesDataSource extends PageKeyedDataSource<Integer, Episode> {
 
         ApiClient.getInstance()
                 .getApi()
-                .getEpisodes(params.key)
+                .getEpisodes(params.key, query.get("name"), query.get("episode"))
                 .enqueue(new Callback<ResponseResult<Episode>>() {
                     @Override
                     @EverythingIsNonNull

@@ -5,20 +5,24 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.ViewModel.ListLocationsViewModel;
+import com.example.rickandmorty.ViewModel.Location.ListLocationsViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
  * checked
  */
-public class LocationsListFragment extends Fragment {
+public class LocationsListFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
 
@@ -41,14 +45,37 @@ public class LocationsListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        ListLocationsViewModel itemViewModel = ViewModelProviders.of(this).get(ListLocationsViewModel.class);
-        final LocationsAdapter adapter = new LocationsAdapter();
+        ListLocationsViewModel itemViewModel = new ViewModelProvider(requireActivity()).get(ListLocationsViewModel.class);
+        itemViewModel.query.setValue(new Hashtable<String, String>() {{
+            put("name", "");
+            put("type", "");
+            put("dimension", "");
+        }});
+        final LocationsAdapter adapter = new LocationsAdapter(location -> {
+            ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
+            LocationInfoFragment fragment =
+                    LocationInfoFragment.getInstance(location);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
 
-        itemViewModel.itemPagedList.observe(this, adapter::submitList);
-
+        itemViewModel.itemPagedList.observe(getViewLifecycleOwner(), adapter::submitList);
+        TextView countTv = v.findViewById(R.id.count);
+        itemViewModel.count.observe(getViewLifecycleOwner(), count -> {
+            if (count != null) {
+                countTv.setText(String.format("Найдено локаций: %s", count.toString()));
+            }
+        });
         recyclerView.setAdapter(adapter);
 
 
         return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

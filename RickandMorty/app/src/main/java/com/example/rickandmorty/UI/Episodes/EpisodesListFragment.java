@@ -5,15 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
-import com.example.rickandmorty.ViewModel.ListEpisodesViewModel;
-import com.example.rickandmorty.ViewModel.ListLocationsViewModel;
+import com.example.rickandmorty.ViewModel.Episode.ListEpisodesViewModel;
+
+import java.util.Hashtable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,11 +44,20 @@ public class EpisodesListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        ListEpisodesViewModel itemViewModel = ViewModelProviders.of(this).get(ListEpisodesViewModel.class);
+        ListEpisodesViewModel itemViewModel = new ViewModelProvider(requireActivity()).get(ListEpisodesViewModel.class);
+        itemViewModel.query.setValue(new Hashtable<String, String>() {{
+            put("name", "");
+            put("episode", "");
+        }});
         final EpisodesAdapter adapter = new EpisodesAdapter();
 
-        itemViewModel.itemPagedList.observe(this, adapter::submitList);
-
+        itemViewModel.itemPagedList.observe(getViewLifecycleOwner(), adapter::submitList);
+        TextView countTv = v.findViewById(R.id.count);
+        itemViewModel.count.observe(getViewLifecycleOwner(), count -> {
+            if (count != null) {
+                countTv.setText(String.format("Найдено эпизодов: %s", count.toString()));
+            }
+        });
         recyclerView.setAdapter(adapter);
 
 

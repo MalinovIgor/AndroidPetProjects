@@ -14,6 +14,7 @@
     <string name="gender">Gender:</string>
     <string name="origin">Origin:</string>
     <string name="location">Location:</string>
+    <string name="residents">Residents:</string>
     <string-array name="character_status_array">
         <item>Unselected</item>
         <item>Alive</item>

@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.RequestManager;
 import com.example.rickandmorty.Data.Network.Character.TheCharacter;
 import com.example.rickandmorty.R;
-//checked
-public class CharactersAdapter extends PagedListAdapter<TheCharacter, CharactersAdapter.CharactersViewHolder2> {
+
+public class CharactersAdapter extends PagedListAdapter<TheCharacter, CharactersAdapter.CharactersViewHolder> {
 
     private RequestManager glideRequestManager;
     private final OnItemClickListener clickListener;
@@ -29,23 +29,23 @@ public class CharactersAdapter extends PagedListAdapter<TheCharacter, Characters
 
     @NonNull
     @Override
-    public CharactersViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CharactersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.character_list_item, parent, false);
-        return new CharactersViewHolder2(view, glideRequestManager, clickListener);
+        return new CharactersViewHolder(view, glideRequestManager, clickListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CharactersViewHolder2 holder, int position) {
+    public void onBindViewHolder(@NonNull CharactersViewHolder holder, int position) {
         TheCharacter character = getItem(position);
-        ((CharactersViewHolder2) holder).bindItem(character.getImage(), character.getName());
+        ((CharactersViewHolder) holder).bindItem(character.getImage(), character.getName());
     }
 
     public interface OnItemClickListener {
         void onItemClick(@NonNull TheCharacter character);
     }
 
-    class CharactersViewHolder2 extends RecyclerView.ViewHolder {
+    class CharactersViewHolder extends RecyclerView.ViewHolder {
 
         private static final int LAYOUT = R.layout.character_list_item;
 
@@ -56,7 +56,7 @@ public class CharactersAdapter extends PagedListAdapter<TheCharacter, Characters
 
 
 
-        public CharactersViewHolder2(@NonNull View itemView, RequestManager requestManager, @Nullable OnItemClickListener listener) {
+        CharactersViewHolder(@NonNull View itemView, RequestManager requestManager, @Nullable OnItemClickListener listener) {
             super(itemView);
             this.imageLoader = requestManager;
             findViews(itemView);
@@ -73,7 +73,7 @@ public class CharactersAdapter extends PagedListAdapter<TheCharacter, Characters
             mName = itemView.findViewById(R.id.name);
         }
 
-        public void bindItem(@NonNull String imgUrl, String name){
+        void bindItem(@NonNull String imgUrl, String name){
             imageLoader.load(imgUrl).into(mImage);
             mName.setText(name);
         }
