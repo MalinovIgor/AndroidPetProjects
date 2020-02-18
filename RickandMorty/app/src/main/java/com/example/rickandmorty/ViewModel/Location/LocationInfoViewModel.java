@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.rickandmorty.Data.Network.Character.TheCharacter;
 import com.example.rickandmorty.Data.Network.Location.Location;
-import com.example.rickandmorty.Data.Network.Location.LocationResidents;
+import com.example.rickandmorty.Data.Network.LocationOrEpisodeResidents;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class LocationInfoViewModel extends ViewModel {
     private MutableLiveData<List<TheCharacter>> residents = new MutableLiveData<>();
 
     public LocationInfoViewModel(Location location) {
-        new LocationResidents(location, residents);
+        new LocationOrEpisodeResidents<>(location, residents);
     }
 
     public LiveData<List<TheCharacter>> getResidents() {

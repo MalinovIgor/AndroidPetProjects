@@ -129,5 +129,16 @@ public class Episode implements Parcelable {
         Episode theCharacter = (Episode) obj;
         return theCharacter.id.equals(this.id);
     }
-
+    public String getCharactersIds() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (String theCharUrl :
+                characters) {
+            sb.append(theCharUrl.split("/")[5]);
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]");
+        return sb.toString();
+    }
 }

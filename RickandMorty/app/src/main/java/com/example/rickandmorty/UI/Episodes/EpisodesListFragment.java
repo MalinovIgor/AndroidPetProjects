@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.ViewModel.Episode.ListEpisodesViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Hashtable;
 
@@ -21,7 +22,7 @@ import java.util.Hashtable;
  * A simple {@link Fragment} subclass.
  * checked
  */
-public class EpisodesListFragment extends Fragment {
+public class EpisodesListFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
 
@@ -49,7 +50,15 @@ public class EpisodesListFragment extends Fragment {
             put("name", "");
             put("episode", "");
         }});
-        final EpisodesAdapter adapter = new EpisodesAdapter();
+        final EpisodesAdapter adapter = new EpisodesAdapter(episode -> {
+            ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
+            EpisodeInfoFragment fragment =
+                    EpisodeInfoFragment.getInstance(episode);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        });
 
         itemViewModel.itemPagedList.observe(getViewLifecycleOwner(), adapter::submitList);
         TextView countTv = v.findViewById(R.id.count);
@@ -62,5 +71,10 @@ public class EpisodesListFragment extends Fragment {
 
 
         return v;
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

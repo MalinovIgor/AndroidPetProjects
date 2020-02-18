@@ -25,6 +25,10 @@ public interface RickAndMortyApiService {
     @GET("episode")
     Call<ResponseResult<Episode>> getEpisodes(@Query("page") int page, @Query("name") String name,
                                               @Query("episode") String episode);
+
     @GET("character/{ids}")
     Call<List<TheCharacter>> getCharactersById(@Path("ids") String ids);
+
+    @GET("episode/{ids}")
+    Call<List<TheCharacter>> getEpisodesById(@Path("ids") String ids);
 }
