@@ -40,7 +40,7 @@ public class TheCharacter implements Parcelable
     private String image;
     @SerializedName("episode")
     @Expose
-    private List<String> episode = new ArrayList<String>();
+    private List<String> episodes = new ArrayList<String>();
     public final static Parcelable.Creator<TheCharacter> CREATOR = new Creator<TheCharacter>() {
 
 
@@ -67,7 +67,7 @@ public class TheCharacter implements Parcelable
         this.origin = ((CharacterOrigin) in.readValue((CharacterOrigin.class.getClassLoader())));
         this.location = ((CharacterLocation) in.readValue((CharacterLocation.class.getClassLoader())));
         this.image = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.episode, (java.lang.String.class.getClassLoader()));
+        in.readList(this.episodes, (java.lang.String.class.getClassLoader()));
     }
 
     public TheCharacter() {
@@ -137,12 +137,12 @@ public class TheCharacter implements Parcelable
         this.image = image;
     }
 
-    public List<String> getEpisode() {
-        return episode;
+    public List<String> getEpisodes() {
+        return episodes;
     }
 
-    public void setEpisode(List<String> episode) {
-        this.episode = episode;
+    public void setEpisodes(List<String> episodes) {
+        this.episodes = episodes;
     }
 
     public void writeToParcel(Parcel dest, int flags) {
@@ -154,7 +154,7 @@ public class TheCharacter implements Parcelable
         dest.writeValue(origin);
         dest.writeValue(location);
         dest.writeValue(image);
-        dest.writeList(episode);
+        dest.writeList(episodes);
     }
 
     public int describeContents() {
@@ -181,6 +181,19 @@ public class TheCharacter implements Parcelable
 
         TheCharacter theCharacter = (TheCharacter) obj;
         return theCharacter.id.equals(this.id);
+    }
+
+    public String getEpisodesIds() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (String theCharUrl :
+                episodes) {
+            sb.append(theCharUrl.split("/")[5]);
+            sb.append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]");
+        return sb.toString();
     }
 
 }

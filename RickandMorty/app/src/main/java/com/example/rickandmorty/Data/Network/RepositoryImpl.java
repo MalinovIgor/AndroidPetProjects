@@ -117,9 +117,9 @@
 ////    }
 ////
 ////    @Override
-////    public LiveData<ApiResponse<Episode>> getEpisode(int id) {
+////    public LiveData<ApiResponse<Episode>> getEpisodes(int id) {
 ////        final MutableLiveData<ApiResponse<Episode>> liveData = new MutableLiveData<>();
-////        Call<Episode> call = mApiService.getEpisode(id);
+////        Call<Episode> call = mApiService.getEpisodes(id);
 ////        call.enqueue(new Callback<Episode>() {
 ////            @Override
 ////            @EverythingIsNonNull

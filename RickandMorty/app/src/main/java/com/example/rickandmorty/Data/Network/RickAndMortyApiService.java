@@ -30,5 +30,5 @@ public interface RickAndMortyApiService {
     Call<List<TheCharacter>> getCharactersById(@Path("ids") String ids);
 
     @GET("episode/{ids}")
-    Call<List<TheCharacter>> getEpisodesById(@Path("ids") String ids);
+    Call<List<Episode>> getEpisodesById(@Path("ids") String ids);
 }

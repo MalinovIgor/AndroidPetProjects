@@ -30,7 +30,7 @@
             android:id="@+id/episode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter episode's code"
+            android:hint="Enter episodes's code"
             android:layout_margin="8dp"
             android:inputType="text"/>
 

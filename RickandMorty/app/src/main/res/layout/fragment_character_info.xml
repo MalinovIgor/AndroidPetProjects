@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="@string/location"/>
+                android:text="@string/episode"/>
 
             <TextView
                 android:id="@+id/location"
@@ -109,6 +109,19 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp" />
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Episodes: " />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/residents_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 </ScrollView>

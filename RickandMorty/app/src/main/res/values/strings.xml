@@ -13,8 +13,8 @@
     <string name="species">Species:</string>
     <string name="gender">Gender:</string>
     <string name="origin">Origin:</string>
-    <string name="location">Location:</string>
-    <string name="residents">Residents:</string>
+    <string name="episode">Location:</string>
+    <string name="episodes">Residents:</string>
     <string-array name="character_status_array">
         <item>Unselected</item>
         <item>Alive</item>

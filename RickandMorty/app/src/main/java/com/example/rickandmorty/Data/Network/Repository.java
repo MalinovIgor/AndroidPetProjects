@@ -11,5 +11,5 @@ public interface Repository {
 //    LiveData<ApiResponse<Episode>> getEpisodes();
 //    LiveData<ApiResponse<TheCharacter>> getCharacter(int id);
 //    LiveData<ApiResponse<Location>> getLocation(int id);
-//    LiveData<ApiResponse<Episode>> getEpisode(int d);
+//    LiveData<ApiResponse<Episode>> getEpisodes(int d);
 }

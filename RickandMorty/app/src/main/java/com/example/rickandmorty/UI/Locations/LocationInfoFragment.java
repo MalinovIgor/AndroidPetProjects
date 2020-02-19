@@ -18,7 +18,6 @@ import com.example.rickandmorty.Data.Network.Location.Location;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.UI.Characters.CharacterInfoFragment;
 import com.example.rickandmorty.UI.LocationOrEpisodeResidentsAdapter;
-import com.example.rickandmorty.ViewModel.InfoViewModelFactory;
 import com.example.rickandmorty.ViewModel.Location.LocationInfoViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -29,7 +28,6 @@ import java.util.List;
  */
 public class LocationInfoFragment extends Fragment {
     private Location location;
-    private List<TheCharacter> residents;
 
     public LocationInfoFragment() {
         // Required empty public constructor
@@ -53,8 +51,8 @@ public class LocationInfoFragment extends Fragment {
         if (getArguments() != null) {
             location = getArguments().getParcelable("location");
         }
-        LocationInfoViewModel viewModel = new ViewModelProvider(requireActivity(),
-                new InfoViewModelFactory<>(location)).get(LocationInfoViewModel.class);
+        LocationInfoViewModel viewModel = new ViewModelProvider(requireActivity()).get(LocationInfoViewModel.class);
+        viewModel.setLocation(location);
         RecyclerView recyclerView = v.findViewById(R.id.residents_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         LocationOrEpisodeResidentsAdapter adapter = new LocationOrEpisodeResidentsAdapter(viewModel.getResidents().getValue(), character -> {

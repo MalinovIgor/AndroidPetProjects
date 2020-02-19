@@ -2,9 +2,9 @@ package com.example.rickandmorty.Data.Network;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.rickandmorty.Data.Network.ApiClient;
 import com.example.rickandmorty.Data.Network.Character.TheCharacter;
 import com.example.rickandmorty.Data.Network.Episode.Episode;
 import com.example.rickandmorty.Data.Network.Location.Location;
@@ -17,12 +17,9 @@ import retrofit2.Response;
 import retrofit2.internal.EverythingIsNonNull;
 
 public class LocationOrEpisodeResidents<T> {
-    private T location;
-    private MutableLiveData<List<TheCharacter>> residents;
+    private MutableLiveData<List<TheCharacter>> residents = new MutableLiveData<>();
 
-    public LocationOrEpisodeResidents(T location, MutableLiveData<List<TheCharacter>> residents){
-        this.location = location;
-        this.residents = residents;
+    public LocationOrEpisodeResidents(T location){
         loadResidents(location);
     }
 
@@ -54,7 +51,7 @@ public class LocationOrEpisodeResidents<T> {
                 });
     }
 
-    public MutableLiveData<List<TheCharacter>> getResidents() {
+    public LiveData<List<TheCharacter>> getResidents() {
         return residents;
     }
 }
