@@ -1,7 +1,11 @@
 package com.example.rickandmorty.Data.Network.Character;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,8 +15,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TheCharacter implements Parcelable
-{
+public class TheCharacter implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -55,8 +58,7 @@ public class TheCharacter implements Parcelable
             return (new TheCharacter[size]);
         }
 
-    }
-            ;
+    };
 
     protected TheCharacter(Parcel in) {
         this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
@@ -183,7 +185,7 @@ public class TheCharacter implements Parcelable
         return theCharacter.id.equals(this.id);
     }
 
-    public String getEpisodesIds() {
+    String getEpisodesIds() {
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (String theCharUrl :
@@ -196,4 +198,18 @@ public class TheCharacter implements Parcelable
         return sb.toString();
     }
 
+    HashMap<String, String> getLocationAndOriginIds() {
+        HashMap<String, String> ids = new HashMap<>();
+        if (!origin.getUrl().equals("")) {
+            ids.put("origin", origin.getUrl().split("/")[5]);
+        } else {
+            ids.put("origin", "unknown");
+        }
+        if (!location.getUrl().equals("")) {
+            ids.put("location", location.getUrl().split("/")[5]);
+        } else {
+            ids.put("location", "unknown");
+        }
+        return ids;
+    }
 }

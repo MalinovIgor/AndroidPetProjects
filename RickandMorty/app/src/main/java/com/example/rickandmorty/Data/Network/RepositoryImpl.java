@@ -60,9 +60,9 @@
 ////    }
 ////
 ////    @Override
-////    public LiveData<ApiResponse<Episode>> getEpisodes() {
+////    public LiveData<ApiResponse<Episode>> getLocations() {
 ////        final MutableLiveData<ApiResponse<Episode>> liveData = new MutableLiveData<>();
-////        Call<List<Episode>> call = mApiService.getEpisodes();
+////        Call<List<Episode>> call = mApiService.getLocations();
 ////        call.enqueue(new Callback<List<Episode>>() {
 ////            @Override
 ////            @EverythingIsNonNull
@@ -117,9 +117,9 @@
 ////    }
 ////
 ////    @Override
-////    public LiveData<ApiResponse<Episode>> getEpisodes(int id) {
+////    public LiveData<ApiResponse<Episode>> getLocations(int id) {
 ////        final MutableLiveData<ApiResponse<Episode>> liveData = new MutableLiveData<>();
-////        Call<Episode> call = mApiService.getEpisodes(id);
+////        Call<Episode> call = mApiService.getLocations(id);
 ////        call.enqueue(new Callback<Episode>() {
 ////            @Override
 ////            @EverythingIsNonNull

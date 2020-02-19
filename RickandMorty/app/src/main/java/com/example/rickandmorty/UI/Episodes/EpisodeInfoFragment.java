@@ -87,4 +87,10 @@ public class EpisodeInfoFragment extends Fragment {
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).show();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
+    }
+
 }
