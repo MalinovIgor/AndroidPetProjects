@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,12 +21,11 @@ import com.example.rickandmorty.Data.Network.Location.Location;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.UI.Episodes.EpisodeInfoFragment;
 import com.example.rickandmorty.UI.Locations.LocationInfoFragment;
+import com.example.rickandmorty.UI.MainActivity;
 import com.example.rickandmorty.ViewModel.Character.CharacterInfoViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +35,7 @@ public class CharacterInfoFragment extends Fragment implements View.OnClickListe
     private HashMap<String, Location> locations;
     private TextView mLocation;
     private TextView mOrigin;
+    private ActionBar mActionBar;
 
     public static CharacterInfoFragment getInstance(TheCharacter character) {
         CharacterInfoFragment fragment = new CharacterInfoFragment();
@@ -93,12 +95,16 @@ public class CharacterInfoFragment extends Fragment implements View.OnClickListe
         Glide.with(v).load(character.getImage()).into((ImageView) v.findViewById(R.id.image));
         mLocation = v.findViewById(R.id.location);
         mOrigin = v.findViewById(R.id.origin);
+        mActionBar = ((MainActivity) getActivity()).getSupportActionBar();
         ((TextView) v.findViewById(R.id.status)).setText(character.getStatus());
         ((TextView) v.findViewById(R.id.species)).setText(character.getSpecies());
         ((TextView) v.findViewById(R.id.gender)).setText(character.getGender());
         mOrigin.setText(character.getOrigin().getName());
         mLocation.setText(character.getLocation().getName());
-
+        mActionBar.setTitle(character.getName());
+//        mActionBar.setDisplayHomeAsUpEnabled(true);
+//        mActionBar.setDisplayShowHomeEnabled(true);
+//        mActionBar.set
 
     }
 
@@ -106,6 +112,7 @@ public class CharacterInfoFragment extends Fragment implements View.OnClickListe
     public void onStop() {
         super.onStop();
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).show();
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
     }
 
     @Override
@@ -140,5 +147,7 @@ public class CharacterInfoFragment extends Fragment implements View.OnClickListe
     public void onResume() {
         super.onResume();
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(character.getName());
     }
+
 }

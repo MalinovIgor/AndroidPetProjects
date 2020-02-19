@@ -18,6 +18,7 @@ import com.example.rickandmorty.Data.Network.Location.Location;
 import com.example.rickandmorty.R;
 import com.example.rickandmorty.UI.Characters.CharacterInfoFragment;
 import com.example.rickandmorty.UI.LocationOrEpisodeResidentsAdapter;
+import com.example.rickandmorty.UI.MainActivity;
 import com.example.rickandmorty.ViewModel.Location.LocationInfoViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -70,6 +71,7 @@ public class LocationInfoFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
         setupView(v);
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(location.getName());
         return v;
     }
 
@@ -85,12 +87,14 @@ public class LocationInfoFragment extends Fragment {
     public void onStop() {
         super.onStop();
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).show();
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.app_name));
     }
 
     @Override
     public void onResume() {
         super.onResume();
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(location.getName());
     }
 
 }
