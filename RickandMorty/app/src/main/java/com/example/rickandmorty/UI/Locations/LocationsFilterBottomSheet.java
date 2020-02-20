@@ -54,7 +54,7 @@ public class LocationsFilterBottomSheet extends BottomSheetDialogFragment implem
         String name = this.name.getText().toString();
         String type = this.type.getText().toString();
         String dimension = this.dimension.getText().toString();
-        model.query.setValue(new Hashtable<String, String>() {{
+        model.setQuery(new Hashtable<String, String>() {{
             put("name", name);
             put("type", type);
             put("dimension", dimension);

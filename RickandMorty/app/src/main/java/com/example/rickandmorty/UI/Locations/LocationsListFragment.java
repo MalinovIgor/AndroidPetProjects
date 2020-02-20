@@ -44,13 +44,10 @@ public class LocationsListFragment extends Fragment implements View.OnClickListe
         recyclerView = v.findViewById(R.id.rv_characters_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
 
         ListLocationsViewModel itemViewModel = new ViewModelProvider(requireActivity()).get(ListLocationsViewModel.class);
-        itemViewModel.query.setValue(new Hashtable<String, String>() {{
-            put("name", "");
-            put("type", "");
-            put("dimension", "");
-        }});
+
         final LocationsAdapter adapter = new LocationsAdapter(location -> {
             ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
             LocationInfoFragment fragment =
@@ -60,16 +57,16 @@ public class LocationsListFragment extends Fragment implements View.OnClickListe
                     .addToBackStack(null)
                     .commit();
         });
+        recyclerView.setAdapter(adapter);
 
         itemViewModel.itemPagedList.observe(getViewLifecycleOwner(), adapter::submitList);
         TextView countTv = v.findViewById(R.id.count);
-        itemViewModel.count.observe(getViewLifecycleOwner(), count -> {
+        itemViewModel.getCount().observe(getViewLifecycleOwner(), count -> {
             if (count != null) {
-                countTv.setText(String.format("Найдено локаций: %s", count.toString()));
+                countTv.setText(String.format("Locations: %s", count.toString()));
             }
         });
-        recyclerView.setAdapter(adapter);
-
+        itemViewModel.init();
 
         return v;
     }

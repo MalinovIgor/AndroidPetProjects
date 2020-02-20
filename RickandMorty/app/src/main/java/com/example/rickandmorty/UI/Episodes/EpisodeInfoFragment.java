@@ -71,7 +71,7 @@ public class EpisodeInfoFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
         setupView(v);
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle(episode.getName());
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(episode.getEpisode());
         return v;
     }
 
@@ -94,7 +94,7 @@ public class EpisodeInfoFragment extends Fragment {
     public void onResume() {
         super.onResume();
         ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
-        ((MainActivity) getActivity()).getSupportActionBar().setTitle(episode.getName());
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(episode.getEpisode());
     }
 
 }

@@ -14,15 +14,16 @@ import com.example.rickandmorty.Data.Network.Episode.EpisodesDataSource;
 import com.example.rickandmorty.Data.Network.Episode.EpisodesDataSourceFactory;
 
 import java.util.Dictionary;
+import java.util.Hashtable;
 
 public class ListEpisodesViewModel extends ViewModel {
 
     public LiveData<PagedList<Episode>> itemPagedList;
     LiveData<PageKeyedDataSource<Integer, Episode>> liveDataSource;
 
-    public final MutableLiveData<Dictionary<String, String>> query =
+    private final MutableLiveData<Dictionary<String, String>> query =
             new MutableLiveData<>();
-    public MutableLiveData<Integer> count = new MutableLiveData<>();
+    private MutableLiveData<Integer> count = new MutableLiveData<>();
 
     public ListEpisodesViewModel() {
 
@@ -38,5 +39,30 @@ public class ListEpisodesViewModel extends ViewModel {
             return new LivePagedListBuilder(itemDataSourceFactory, config).build();
         });
 
+    }
+
+    public void loadAgain() {
+        Dictionary<String, String> temp = query.getValue();
+        query.setValue(temp);
+    }
+
+    public void init() {
+        query.setValue(new Hashtable<String, String>() {{
+            put("name", "");
+            put("episode", "");
+        }});
+    }
+
+    public LiveData<Dictionary<String, String>> getQuery() {
+        return query;
+    }
+
+    public LiveData<Integer> getCount() {
+        return count;
+    }
+
+
+    public void setQuery(Dictionary<String, String> query){
+        this.query.setValue(query);
     }
 }

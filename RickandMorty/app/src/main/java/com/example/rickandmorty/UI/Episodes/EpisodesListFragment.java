@@ -44,12 +44,9 @@ public class EpisodesListFragment extends Fragment implements View.OnClickListen
         recyclerView = v.findViewById(R.id.rv_characters_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
 
         ListEpisodesViewModel itemViewModel = new ViewModelProvider(requireActivity()).get(ListEpisodesViewModel.class);
-        itemViewModel.query.setValue(new Hashtable<String, String>() {{
-            put("name", "");
-            put("episode", "");
-        }});
         final EpisodesAdapter adapter = new EpisodesAdapter(episode -> {
             ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
             EpisodeInfoFragment fragment =
@@ -59,16 +56,16 @@ public class EpisodesListFragment extends Fragment implements View.OnClickListen
                     .addToBackStack(null)
                     .commit();
         });
+        recyclerView.setAdapter(adapter);
 
         itemViewModel.itemPagedList.observe(getViewLifecycleOwner(), adapter::submitList);
         TextView countTv = v.findViewById(R.id.count);
-        itemViewModel.count.observe(getViewLifecycleOwner(), count -> {
+        itemViewModel.getCount().observe(getViewLifecycleOwner(), count -> {
             if (count != null) {
-                countTv.setText(String.format("Найдено эпизодов: %s", count.toString()));
+                countTv.setText(String.format("Episodes: %s", count.toString()));
             }
         });
-        recyclerView.setAdapter(adapter);
-
+        itemViewModel.init();
 
         return v;
     }

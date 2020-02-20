@@ -47,7 +47,7 @@ public class CharactersListFragment extends Fragment implements View.OnClickList
         recyclerView = v.findViewById(R.id.rv_characters_list);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         recyclerView.setHasFixedSize(true);
-
+        recyclerView.setNestedScrollingEnabled(false);
         itemViewModel = new ViewModelProvider(requireActivity()).get(ListCharactersViewModel.class);
         final CharactersAdapter adapter = new CharactersAdapter(Glide.with(v.getContext()),
                 character -> {

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
@@ -63,6 +62,7 @@ public class CharacterInfoFragment extends Fragment implements View.OnClickListe
         CharacterInfoViewModel viewModel = new ViewModelProvider(requireActivity()).get(CharacterInfoViewModel.class);
         viewModel.setCharacter(character);
         RecyclerView recyclerView = v.findViewById(R.id.residents_rv);
+        recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         CharacterEpisodesAdapter adapter = new CharacterEpisodesAdapter(viewModel.getEpisodes().getValue(), episode -> {
             ((FloatingActionButton) getActivity().findViewById(R.id.fab)).hide();
@@ -102,9 +102,6 @@ public class CharacterInfoFragment extends Fragment implements View.OnClickListe
         mOrigin.setText(character.getOrigin().getName());
         mLocation.setText(character.getLocation().getName());
         mActionBar.setTitle(character.getName());
-//        mActionBar.setDisplayHomeAsUpEnabled(true);
-//        mActionBar.setDisplayShowHomeEnabled(true);
-//        mActionBar.set
 
     }
 

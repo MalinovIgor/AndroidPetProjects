@@ -51,7 +51,7 @@ public class EpisodesFilterBottomSheet extends BottomSheetDialogFragment impleme
         ListEpisodesViewModel model = new ViewModelProvider(requireActivity()).get(ListEpisodesViewModel.class);
         String name = this.name.getText().toString();
         String episode = this.episode.getText().toString();
-        model.query.setValue(new Hashtable<String, String>() {{
+        model.setQuery(new Hashtable<String, String>() {{
             put("name", name);
             put("episode", episode);
         }});
