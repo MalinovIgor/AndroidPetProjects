@@ -1,18 +1,7 @@
 package com.example.pharmacies_analysis.ui.search;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,10 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacies_analysis.MainActivity;
 import com.example.pharmacies_analysis.R;
@@ -31,7 +27,9 @@ import com.example.pharmacies_analysis.data.db.Medicine;
 import com.example.pharmacies_analysis.databinding.SearchFragmentBinding;
 import com.example.pharmacies_analysis.ui.ViewModelFactory;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -47,6 +45,7 @@ public class SearchFragment extends Fragment {
     private static final int SEARCH_APPBAR = 1;
     private int mAppBarState;
     private SearchFragmentBinding mSearchFragmentBinding;
+    private List<Medicine> medicinesToAdd;
 
     EditText mSearchMedicine;
     private AppBarLayout viewFormsBar, searchBar;
@@ -66,6 +65,7 @@ public class SearchFragment extends Fragment {
         viewFormsBar = v.findViewById(R.id.viewFormsToolbar);
         searchBar = v.findViewById(R.id.searchToolbar);
         mSearchMedicine = v.findViewById(R.id.etSearchMedicine);
+        medicinesToAdd = new ArrayList<>();
 
         setAppBarState(SEARCH_APPBAR);
         ImageView ivSearchForms = v.findViewById(R.id.ivSearchIcon);
@@ -89,11 +89,13 @@ public class SearchFragment extends Fragment {
             if (type == SearchResultAdapter.ADD){
                 holder.searchResultListItemBinding.addedItem.setVisibility(View.VISIBLE);
                 holder.searchResultListItemBinding.addItem.setVisibility(View.GONE);
-                mViewModel.insert(medicine);
+                medicinesToAdd.add(medicine);
+                medicine.isChecked = true;
             } else if (type == SearchResultAdapter.DELETE){
                 holder.searchResultListItemBinding.addedItem.setVisibility(View.GONE);
                 holder.searchResultListItemBinding.addItem.setVisibility(View.VISIBLE);
-                mViewModel.delete(medicine);
+                medicinesToAdd.remove(medicine);
+                medicine.isChecked = false;
             }
         });
         recyclerView.setAdapter(mAdapter);
@@ -106,6 +108,15 @@ public class SearchFragment extends Fragment {
                 return true;
             }
             return false;
+        });
+
+        mSearchFragmentBinding.fabAdd.setOnClickListener(v16 -> {
+        if (medicinesToAdd.size() == 0){
+            Toast.makeText(getContext(), "Ничего не выбрано", Toast.LENGTH_SHORT).show();
+        } else {
+            mViewModel.insertAllMedicines(medicinesToAdd);
+            getActivity().getSupportFragmentManager().popBackStack();
+        }
         });
         return v;
     }
@@ -128,18 +139,25 @@ public class SearchFragment extends Fragment {
 
 
     private void handleError(Throwable throwable) {
+        mSearchFragmentBinding.searchResult.setVisibility(View.GONE);
+        mSearchFragmentBinding.fabAdd.hide();
         mSearchFragmentBinding.error.setVisibility(View.VISIBLE);
     }
 
     private void handleResult(List<Medicine> medicines) {
         if (medicines.size() == 0){
+            mSearchFragmentBinding.searchResult.setVisibility(View.GONE);
             mSearchFragmentBinding.nothingToShow.setVisibility(View.VISIBLE);
+            mSearchFragmentBinding.fabAdd.hide();
         }
         else {
             mSearchFragmentBinding.nothingToShow.setVisibility(View.GONE);
             mSearchFragmentBinding.error.setVisibility(View.GONE);
             mAdapter.setMedicinesList(medicines);
             mAdapter.notifyDataSetChanged();
+            mSearchFragmentBinding.fabAdd.show();
+            mSearchFragmentBinding.searchResult.setVisibility(View.VISIBLE);
+
         }
         toggleToolBarState();
     }
@@ -164,7 +182,6 @@ public class SearchFragment extends Fragment {
         if (mAppBarState == STANDARD_APPBAR) {
             searchBar.setVisibility(View.GONE);
             viewFormsBar.setVisibility(View.VISIBLE);
-
             View view = getView();
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             try {
@@ -174,6 +191,10 @@ public class SearchFragment extends Fragment {
             }
         } else if (mAppBarState == SEARCH_APPBAR) {
             viewFormsBar.setVisibility(View.GONE);
+            mSearchFragmentBinding.searchResult.setVisibility(View.GONE);
+            mSearchFragmentBinding.error.setVisibility(View.GONE);
+            mSearchFragmentBinding.nothingToShow.setVisibility(View.GONE);
+            mSearchFragmentBinding.fabAdd.hide();
             searchBar.setVisibility(View.VISIBLE);
             InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             im.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // make keyboard popup

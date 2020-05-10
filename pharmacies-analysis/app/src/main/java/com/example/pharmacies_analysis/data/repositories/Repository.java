@@ -10,7 +10,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface Repository {
-    void insert(Medicine medicine);
+    void insertAllMedicines(List<Medicine> medicines);
     Flowable<List<Medicine>> getAll();
     void delete(Medicine medicine);
     Observable<List<Medicine>> search(String query);

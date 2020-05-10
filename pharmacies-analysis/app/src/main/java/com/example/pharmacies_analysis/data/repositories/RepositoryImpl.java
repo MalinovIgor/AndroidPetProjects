@@ -35,8 +35,8 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void insert(Medicine medicine) {
-        Completable.fromRunnable(() -> medicineDao.insert(medicine))
+    public void insertAllMedicines(List<Medicine> medicines) {
+        Completable.fromRunnable(() -> medicineDao.insertAllMedicines(medicines))
                 .subscribeOn(Schedulers.io())
                 .subscribe();
     }

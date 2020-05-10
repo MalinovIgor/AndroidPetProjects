@@ -46,6 +46,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
                 onItemClickListener.onItemClick(holder, medicines.get(position), DELETE);
             }
         });
+        if (medicines.get(position).isChecked){
+            holder.searchResultListItemBinding.addItem.setVisibility(View.GONE);
+            holder.searchResultListItemBinding.addedItem.setVisibility(View.VISIBLE);
+        } else {
+            holder.searchResultListItemBinding.addedItem.setVisibility(View.GONE);
+            holder.searchResultListItemBinding.addItem.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.pharmacies_analysis.ui.search;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -24,8 +23,8 @@ public class SearchViewModel extends ViewModel {
         return repository.search(query);
     }
 
-    public void insert(Medicine medicine){
-        repository.insert(medicine);
+    public void insertAllMedicines(List<Medicine> medicine){
+        repository.insertAllMedicines(medicine);
     }
 
     public void delete(Medicine medicine){
