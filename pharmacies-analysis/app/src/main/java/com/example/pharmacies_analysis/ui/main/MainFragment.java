@@ -4,21 +4,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.pharmacies_analysis.R;
+import com.example.pharmacies_analysis.ui.main.MedicinesList.MedicinesListFragment;
+import com.example.pharmacies_analysis.ui.main.PharmacyMap.PharmacyMapFragment;
 import com.example.pharmacies_analysis.ui.search.SearchFragment;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.Objects;
 
@@ -47,7 +44,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.tab_fragment, DrugListFragment.newInstance()).addToBackStack(DrugListFragment.class.getName()).commit();
+                .replace(R.id.tab_fragment, MedicinesListFragment.newInstance()).addToBackStack(MedicinesListFragment.class.getName()).commit();
         TabLayout tabLayout = view.findViewById(R.id.tab_layout);
         tab_setup(tabLayout);
         super.onViewCreated(view, savedInstanceState);
@@ -69,14 +66,14 @@ public class MainFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     fab.show();
-                    if (getChildFragmentManager().findFragmentByTag(DrugListFragment.class.toString()) != null){
+                    if (getChildFragmentManager().findFragmentByTag(MedicinesListFragment.class.toString()) != null){
                         getChildFragmentManager().beginTransaction()
                                 .replace(R.id.tab_fragment, Objects.requireNonNull(getChildFragmentManager()
-                                        .findFragmentByTag(DrugListFragment.class.toString())))
+                                        .findFragmentByTag(MedicinesListFragment.class.toString())))
                                 .addToBackStack(null).commit();
                     } else {
                         getChildFragmentManager().beginTransaction()
-                                .replace(R.id.tab_fragment, DrugListFragment.newInstance(), DrugListFragment.class.toString())
+                                .replace(R.id.tab_fragment, MedicinesListFragment.newInstance(), MedicinesListFragment.class.toString())
                                 .addToBackStack(null).commit();
                     }
 

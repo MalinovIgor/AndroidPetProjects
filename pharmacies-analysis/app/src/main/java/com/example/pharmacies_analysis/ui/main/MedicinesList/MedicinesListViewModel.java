@@ -1,6 +1,5 @@
-package com.example.pharmacies_analysis.ui.search;
+package com.example.pharmacies_analysis.ui.main.MedicinesList;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -11,24 +10,20 @@ import com.example.pharmacies_analysis.data.repositories.RepositoryImpl;
 
 import java.util.List;
 
-import io.reactivex.Observable;
+import io.reactivex.Flowable;
 
-public class SearchViewModel extends ViewModel {
+public class MedicinesListViewModel extends ViewModel {
     private RepositoryImpl repository;
 
-    public SearchViewModel(@NonNull Context context) {
+    public MedicinesListViewModel(@NonNull Context context) {
         repository = RepositoryImpl.getRepository(context);
-    }
-
-    public Observable<List<Medicine>> getForms(String query){
-        return repository.search(query);
-    }
-
-    public void insert(Medicine medicine){
-        repository.insert(medicine);
     }
 
     public void delete(Medicine medicine){
         repository.delete(medicine);
+    }
+
+    public Flowable<List<Medicine>> getAllMedicines(){
+        return repository.getAll();
     }
 }

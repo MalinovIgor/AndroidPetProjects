@@ -1,7 +1,6 @@
-package com.example.pharmacies_analysis.ui.main;
+package com.example.pharmacies_analysis.ui.main.PharmacyMap;
 
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Bundle;
 
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.example.pharmacies_analysis.R;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 
