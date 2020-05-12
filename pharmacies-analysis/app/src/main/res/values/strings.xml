@@ -11,4 +11,6 @@
     <string name="ready">добавить</string>
     <string name="settings_radius_text">Радиус поиска:</string>
     <string name="km">км</string>
+    <string name="ok">ок</string>
+    <string name="title">В выбранном радиусе не найдены:</string>
 </resources>

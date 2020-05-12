@@ -1,6 +1,9 @@
 package com.example.pharmacies_analysis.ui.main.PharmacyMap;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -9,14 +12,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pharmacies_analysis.R;
 import com.example.pharmacies_analysis.data.db.Medicine;
@@ -86,7 +93,14 @@ public class PharmacyMapFragment extends Fragment implements OnMapReadyCallback,
     private void handleResult(PharmaciesResponse pharmaciesResponse) {
         this.pharmaciesResponse = pharmaciesResponse;
         if (pharmaciesResponse.getPharmacies().size() == 0) {
-            Toast.makeText(getContext(), R.string.nothing_to_show, Toast.LENGTH_SHORT).show();
+            new AlertDialog.Builder(getContext())
+                    .setTitle(R.string.nothing_to_show)
+                    .setPositiveButton(R.string.ok, (dialog, which) -> dialog.dismiss())
+                    .setMessage("Попробуйте изменить радиус поиска")
+                    .show();
+        }
+        if (pharmaciesResponse.getPharmacies().size() != 0 && pharmaciesResponse.getNotFound().size() != 0){
+            showDialog(pharmaciesResponse.getNotFound());
         }
         mapFragment.getMapAsync(this);
     }
@@ -178,6 +192,11 @@ public class PharmacyMapFragment extends Fragment implements OnMapReadyCallback,
                 sendRequest(this.medicines, radius);
             });
         }
+    }
+
+    public void showDialog(List<String> notFoundMedicines){
+        DialogFragment notFoundMedicinesDialog = NotFoundMedicinesDialog.newInstance((ArrayList<String>) notFoundMedicines);
+        notFoundMedicinesDialog.show(getChildFragmentManager(), "");
     }
 
 }
