@@ -13,4 +13,5 @@
     <string name="km">км</string>
     <string name="ok">ок</string>
     <string name="title">В выбранном радиусе не найдены:</string>
+    <string name="clear_all">Очистить список</string>
 </resources>

@@ -26,4 +26,8 @@ public class MedicinesListViewModel extends ViewModel {
     public Flowable<List<Medicine>> getAllMedicines(){
         return repository.getAll();
     }
+
+    public void deleteAll(){
+        repository.deleteAll();
+    }
 }

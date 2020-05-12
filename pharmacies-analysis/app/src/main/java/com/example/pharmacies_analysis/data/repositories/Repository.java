@@ -19,4 +19,5 @@ public interface Repository {
     Observable<PharmaciesResponse> getPharmacies(Location location, int distance, List<Medicine> medicines);
     void saveRadius(int radius);
     SharedPreferenceIntegerLiveData getRadius();
+    void deleteAll();
 }

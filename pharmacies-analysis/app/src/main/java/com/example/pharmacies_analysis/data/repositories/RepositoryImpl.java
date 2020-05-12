@@ -105,4 +105,10 @@ public class RepositoryImpl implements Repository {
     public SharedPreferenceIntegerLiveData getRadius() {
         return sharedPreferenceLiveData;
     }
+
+    public void deleteAll() {
+        Completable.fromRunnable(() -> medicineDao.deleteAll())
+                .subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 }
