@@ -1,8 +1,8 @@
 package com.example.pharmacies_analysis.data.network;
 
-import com.example.pharmacies_analysis.data.db.Medicine;
-
-import java.util.List;
+import com.example.pharmacies_analysis.data.network.models.Forms;
+import com.example.pharmacies_analysis.data.network.models.PharmaciesRequest;
+import com.example.pharmacies_analysis.data.network.models.PharmaciesResponse;
 
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
@@ -22,5 +22,9 @@ public class MedicinesService {
 
     public Observable<Forms> getForms(String medicine){
         return medicinesApi.getMedicines(medicine);
+    }
+
+    public Observable<PharmaciesResponse> getPharmacies(PharmaciesRequest pharmaciesRequest){
+        return medicinesApi.getPharmacies(pharmaciesRequest);
     }
 }

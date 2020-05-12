@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <data>
+
+        <variable
+            name="pharmacy"
+            type="com.example.pharmacies_analysis.data.network.models.Pharmacy" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/pharmacy_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/colorBackground">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/pharmacy_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{pharmacy.name}"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ADDRESS" />
+
+            <TextView
+                android:id="@+id/pharmacy_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{pharmacy.info}"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/pharmacy_name"
+                tools:text="info" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"
+                app:layout_constraintBottom_toTopOf="@id/medicines_list_recycler"
+                app:layout_constraintTop_toBottomOf="@id/pharmacy_info" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/medicines_list_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/pharmacy_info" />
+        </LinearLayout>
+
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

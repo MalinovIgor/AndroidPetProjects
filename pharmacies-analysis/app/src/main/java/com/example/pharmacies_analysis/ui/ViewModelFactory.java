@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pharmacies_analysis.ui.main.MedicinesList.MedicinesListViewModel;
+import com.example.pharmacies_analysis.ui.main.PharmacyMap.PharmacyMapViewModel;
 import com.example.pharmacies_analysis.ui.search.SearchViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
@@ -23,6 +24,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         }
         if (modelClass.isAssignableFrom(MedicinesListViewModel.class)){
             return (T) new MedicinesListViewModel(context);
+        }
+        if (modelClass.isAssignableFrom(PharmacyMapViewModel.class)){
+            return (T) new PharmacyMapViewModel(context);
         }
         //noinspection unchecked
         throw new IllegalArgumentException("Unknown ViewModel class");

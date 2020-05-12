@@ -21,7 +21,6 @@ import java.util.Objects;
 
 public class MainFragment extends Fragment {
 
-    private MainViewModel mViewModel;
     private FloatingActionButton fab;
 
     public static MainFragment newInstance() {
@@ -50,13 +49,6 @@ public class MainFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-
-        // TODO: Use the ViewModel
-    }
 
     private void tab_setup(TabLayout tabLayout){
         tabLayout.addTab(tabLayout.newTab().setText(R.string.list));

@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.PharmacyMap.PharmacyMapFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:id="@+id/map"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:context=".ui.main.PharmacyMap.PharmacyMapFragment">
 
-</FrameLayout>
+        <androidx.fragment.app.FragmentContainerView
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/settings_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="8dp"
+            android:src="@drawable/ic_settings_black_24dp" />
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:text="@string/request_error"
+            android:visibility="gone"/>
+
+        <RelativeLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

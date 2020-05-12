@@ -5,15 +5,18 @@ import android.content.Context;
 import com.example.pharmacies_analysis.data.db.AppDatabase;
 import com.example.pharmacies_analysis.data.db.Medicine;
 import com.example.pharmacies_analysis.data.db.MedicineDao;
-import com.example.pharmacies_analysis.data.network.Forms;
 import com.example.pharmacies_analysis.data.network.MedicinesService;
+import com.example.pharmacies_analysis.data.network.models.Location;
+import com.example.pharmacies_analysis.data.network.models.PharmaciesRequest;
+import com.example.pharmacies_analysis.data.network.models.PharmaciesResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class RepositoryImpl implements Repository {
@@ -66,7 +69,15 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public void getPharmaciesLocations(List<String> medicinesList) {
-
+    public Observable<PharmaciesResponse> getPharmacies(Location location, int distance, List<Medicine> medicines) {
+        ArrayList<String> medicinesList = new ArrayList<>();
+        for (Medicine medicine:
+             medicines) {
+            medicinesList.add(medicine.name);
+        }
+        PharmaciesRequest pharmaciesRequest = new PharmaciesRequest(location, distance, medicinesList);
+        return medicinesService.getPharmacies(pharmaciesRequest)
+                .subscribeOn(Schedulers.io());
     }
+
 }

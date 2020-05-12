@@ -1,4 +1,4 @@
-package com.example.pharmacies_analysis.data.network;
+package com.example.pharmacies_analysis.data.network.models;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
