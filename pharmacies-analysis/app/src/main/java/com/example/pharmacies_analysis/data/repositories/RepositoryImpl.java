@@ -11,19 +11,14 @@ import com.example.pharmacies_analysis.data.network.models.Location;
 import com.example.pharmacies_analysis.data.network.models.PharmaciesRequest;
 import com.example.pharmacies_analysis.data.network.models.PharmaciesResponse;
 import com.example.pharmacies_analysis.data.sharedPreference.SharedPreferenceIntegerLiveData;
-import com.example.pharmacies_analysis.data.sharedPreference.SharedPreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.Single;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subjects.BehaviorSubject;
 
 public class RepositoryImpl implements Repository {
     private MedicinesService medicinesService;

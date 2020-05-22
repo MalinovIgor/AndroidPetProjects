@@ -13,9 +13,15 @@ public class Pharmacy implements Parcelable {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("info")
+    @SerializedName("address")
     @Expose
-    private String info;
+    private String address;
+    @SerializedName("contacts")
+    @Expose
+    private List<Contact> contacts = null;
+    @SerializedName("workHours")
+    @Expose
+    private String workHours;
     @SerializedName("coordinates")
     @Expose
     private Location coordinates;
@@ -29,14 +35,6 @@ public class Pharmacy implements Parcelable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
     }
 
     public Location getCoordinates() {
@@ -55,6 +53,30 @@ public class Pharmacy implements Parcelable {
         this.medicines = medicines;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public String getWorkHours() {
+        return workHours;
+    }
+
+    public void setWorkHours(String workHours) {
+        this.workHours = workHours;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -63,9 +85,11 @@ public class Pharmacy implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeString(this.info);
+        dest.writeString(this.address);
+        dest.writeList(this.contacts);
+        dest.writeString(this.workHours);
         dest.writeParcelable(this.coordinates, flags);
-        dest.writeList(this.medicines);
+        dest.writeTypedList(this.medicines);
     }
 
     public Pharmacy() {
@@ -73,10 +97,12 @@ public class Pharmacy implements Parcelable {
 
     protected Pharmacy(Parcel in) {
         this.name = in.readString();
-        this.info = in.readString();
+        this.address = in.readString();
+        this.contacts = new ArrayList<Contact>();
+        in.readList(this.contacts, Contact.class.getClassLoader());
+        this.workHours = in.readString();
         this.coordinates = in.readParcelable(Location.class.getClassLoader());
-        this.medicines = new ArrayList<Medicine>();
-        in.readList(this.medicines, Medicine.class.getClassLoader());
+        this.medicines = in.createTypedArrayList(Medicine.CREATOR);
     }
 
     public static final Parcelable.Creator<Pharmacy> CREATOR = new Parcelable.Creator<Pharmacy>() {

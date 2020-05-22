@@ -72,7 +72,12 @@ public class SearchFragment extends Fragment {
         ivSearchForms.setOnClickListener(v1 -> toggleToolBarState());
 
         ImageView ivSearch = v.findViewById(R.id.ivSearch);
-        ivSearch.setOnClickListener(v14 -> search(mSearchMedicine.getText().toString()));
+        ivSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v14) {
+                SearchFragment.this.search(mSearchMedicine.getText().toString());
+            }
+        });
 
         ImageView ivBackArrow = v.findViewById(R.id.ivBackArrow);
         ImageView ivBackHomeArrow = v.findViewById(R.id.ivBackHomeArrow);

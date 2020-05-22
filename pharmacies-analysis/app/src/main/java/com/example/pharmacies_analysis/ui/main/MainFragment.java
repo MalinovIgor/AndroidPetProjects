@@ -1,6 +1,7 @@
 package com.example.pharmacies_analysis.ui.main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.Objects;
 
 public class MainFragment extends Fragment {
 
+    private static final String TAG = MainFragment.class.toString();
     private FloatingActionButton fab;
 
     public static MainFragment newInstance() {
@@ -33,10 +35,8 @@ public class MainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.main_fragment, container, false);
         fab = v.findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.container, SearchFragment.newInstance(), SearchFragment.class.toString())
-                    .addToBackStack(null).commit();
-        });
+        fab.setOnClickListener(view -> MainFragment.this.getParentFragmentManager().beginTransaction().replace(R.id.container, SearchFragment.newInstance(), SearchFragment.class.toString())
+                .addToBackStack(null).commit());
         return v;
     }
 
@@ -94,5 +94,23 @@ public class MainFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: ");
+    }
+
+    @Override
+    public void onDetach() {
+        Log.d(TAG, "onDetach: ");
+        super.onDetach();
     }
 }

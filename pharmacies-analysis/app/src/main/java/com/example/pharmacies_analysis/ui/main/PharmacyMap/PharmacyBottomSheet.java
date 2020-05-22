@@ -1,14 +1,16 @@
 package com.example.pharmacies_analysis.ui.main.PharmacyMap;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.ViewCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,20 +21,17 @@ import com.example.pharmacies_analysis.databinding.PharmacyBottomSheetBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class PharmacyBottomSheet extends BottomSheetDialogFragment {
-    PharmacyBottomSheetBinding pharmacyBottomSheetBinding;
-    MedicinesInPharmacyAdapter pharmacyAdapter;
-    Pharmacy pharmacy;
+    private static final String PHARMACY = "PHARMACY";
+    private PharmacyBottomSheetBinding pharmacyBottomSheetBinding;
+    private MedicinesInPharmacyAdapter pharmacyAdapter;
 
-    public static PharmacyBottomSheet newInstance(Pharmacy pharmacy) {
+    static PharmacyBottomSheet newInstance(Pharmacy pharmacy) {
 
         Bundle args = new Bundle();
-        args.putParcelable("PHARMACY", pharmacy);
+        args.putParcelable(PHARMACY, pharmacy);
         PharmacyBottomSheet fragment = new PharmacyBottomSheet();
         fragment.setArguments(args);
         return fragment;
-    }
-    public PharmacyBottomSheet() {
-        super();
     }
 
     @Nullable
@@ -43,10 +42,11 @@ public class PharmacyBottomSheet extends BottomSheetDialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         pharmacyAdapter = new MedicinesInPharmacyAdapter();
-        pharmacy = getArguments().getParcelable("PHARMACY");
+        Pharmacy pharmacy = getArguments().getParcelable(PHARMACY);
         pharmacyAdapter.setMedicinesList(pharmacy.getMedicines());
         recyclerView.setAdapter(pharmacyAdapter);
         pharmacyBottomSheetBinding.setPharmacy(pharmacy);
+        pharmacyBottomSheetBinding.setActions(new com.example.pharmacies_analysis.ui.main.DialNumberAction());
         return pharmacyBottomSheetBinding.getRoot();
     }
 
@@ -56,7 +56,7 @@ public class PharmacyBottomSheet extends BottomSheetDialogFragment {
         Dialog dialog = getDialog();
 
         if (dialog != null) {
-            View bottomSheet = dialog.findViewById(R.id.pharmacy_bottom_sheet);
+            View bottomSheet = pharmacyBottomSheetBinding.pharmacyBottomSheet;
             final float scale = getContext().getResources().getDisplayMetrics().density;
             bottomSheet.getLayoutParams().height = (int) (350 * scale + 0.5f);
         }
