@@ -6,7 +6,7 @@
     <string name="search">Поиск</string>
     <string name="search_hint">Поиск лекарств</string>
     <string name="nothing_to_show">Ничего не найдено</string>
-    <string name="request_error">Не удалось загрузить данные. Попробуйте еще раз.</string>
+    <string name="request_error">Не удалось загрузить данные.</string>
     <string name="empty_list">Список пуст</string>
     <string name="ready">добавить</string>
     <string name="settings_radius_text">Радиус поиска:</string>

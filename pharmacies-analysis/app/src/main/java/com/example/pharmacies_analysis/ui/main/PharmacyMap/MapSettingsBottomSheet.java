@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.pharmacies_analysis.R;
 import com.example.pharmacies_analysis.databinding.MapSettingBottomSheetBinding;
-import com.example.pharmacies_analysis.ui.ViewModelFactory;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class MapSettingsBottomSheet extends BottomSheetDialogFragment implements SeekBar.OnSeekBarChangeListener {
@@ -24,8 +23,7 @@ public class MapSettingsBottomSheet extends BottomSheetDialogFragment implements
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mapSettingBottomSheetBinding = DataBindingUtil.inflate(inflater,
                 R.layout.map_setting_bottom_sheet, container, false);
-        ViewModelFactory viewModelFactory = new ViewModelFactory(getContext());
-        PharmacyMapViewModel mViewModel = new ViewModelProvider(this, viewModelFactory).get(PharmacyMapViewModel.class);
+        PharmacyMapViewModel mViewModel = new ViewModelProvider(this).get(PharmacyMapViewModel.class);
         mViewModel.getRadius().observe(getViewLifecycleOwner(), radius -> {
             mapSettingBottomSheetBinding.radiusValue.setText(convertIntToRadiusValue(radius));
             mapSettingBottomSheetBinding.radius.setProgress(radius);

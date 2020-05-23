@@ -34,19 +34,11 @@ public class NotFoundMedicinesDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final RecyclerView recyclerView = (RecyclerView) getActivity().getLayoutInflater().inflate(R.layout.dialog_recycler, null);
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//        View dialogView = inflater.inflate(R.layout.dialog_recycler, null);
-
-//        RecyclerView recyclerView = dialogView.findViewById(R.id.recycler);
         NotFoundMedicinesAdapter notFoundMedicinesAdapter = new NotFoundMedicinesAdapter();
         notFoundMedicinesAdapter.setMedicinesList(getArguments().getStringArrayList("LIST"));
         recyclerView.setAdapter(notFoundMedicinesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-//        builder.setView(inflater.inflate(R.layout.dialog_recycler, null))
-//                .setPositiveButton(R.string.ok, (dialog, which) -> dismiss());
-        // Create the AlertDialog object and return it
         return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.title)
                 .setView(recyclerView)

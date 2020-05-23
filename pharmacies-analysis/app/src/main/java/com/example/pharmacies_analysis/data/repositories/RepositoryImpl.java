@@ -1,5 +1,6 @@
 package com.example.pharmacies_analysis.data.repositories;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -30,17 +31,17 @@ public class RepositoryImpl implements Repository {
     private SharedPreferenceIntegerLiveData sharedPreferenceLiveData;
 
 
-    private RepositoryImpl(Context context) {
-        AppDatabase db = AppDatabase.getDatabase(context);
+    private RepositoryImpl(Application application) {
+        AppDatabase db = AppDatabase.getDatabase(application);
         medicineDao = db.drugDao();
         medicinesService = new MedicinesService();
-        sharedPreferences = context.getSharedPreferences(NAME_PREFERENCE, Context.MODE_PRIVATE);
+        sharedPreferences = application.getSharedPreferences(NAME_PREFERENCE, Context.MODE_PRIVATE);
         saveRadius(sharedPreferences.getInt(RADIUS_KEY, 1000));
     }
 
-    public static RepositoryImpl getRepository(Context context) {
+    public static RepositoryImpl getRepository(Application application) {
         if (instance == null) {
-            instance = new RepositoryImpl(context);
+            instance = new RepositoryImpl(application);
         }
         return instance;
     }

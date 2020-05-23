@@ -25,9 +25,7 @@ import com.example.pharmacies_analysis.MainActivity;
 import com.example.pharmacies_analysis.R;
 import com.example.pharmacies_analysis.data.db.Medicine;
 import com.example.pharmacies_analysis.databinding.SearchFragmentBinding;
-import com.example.pharmacies_analysis.ui.ViewModelFactory;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +86,7 @@ public class SearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
-        ViewModelFactory viewModelFactory = new ViewModelFactory(getContext());
-        mViewModel = new ViewModelProvider(this, viewModelFactory).get(SearchViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
         mAdapter = new SearchResultAdapter((holder, medicine, type) -> {
             if (type == SearchResultAdapter.ADD){
                 holder.searchResultListItemBinding.addedItem.setVisibility(View.VISIBLE);

@@ -1,8 +1,10 @@
 package com.example.pharmacies_analysis.ui.main.PharmacyMap;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.ViewModel;
 
 import com.example.pharmacies_analysis.data.db.Medicine;
@@ -18,11 +20,12 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class PharmacyMapViewModel extends ViewModel {
+public class PharmacyMapViewModel extends AndroidViewModel {
     private RepositoryImpl repository;
 
-    public PharmacyMapViewModel(@NonNull Context context) {
-        repository = RepositoryImpl.getRepository(context);
+    public PharmacyMapViewModel(@NonNull Application application) {
+        super(application);
+        repository = RepositoryImpl.getRepository(application);
 
     }
 

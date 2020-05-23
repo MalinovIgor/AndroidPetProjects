@@ -1,23 +1,24 @@
 package com.example.pharmacies_analysis;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.pharmacies_analysis.ui.ViewModelFactory;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.pharmacies_analysis.data.repositories.Repository;
+import com.example.pharmacies_analysis.data.repositories.RepositoryImpl;
 import com.example.pharmacies_analysis.ui.main.MainFragment;
-import com.example.pharmacies_analysis.ui.main.MedicinesList.MedicinesListViewModel;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener{
     Toolbar mActionBarToolbar;
-    MedicinesListViewModel medicinesListViewModel;
+    private Repository mRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +31,10 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
         mActionBarToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mActionBarToolbar);
-        getSupportActionBar().setTitle(R.string.app_name);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.app_name);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
         shouldDisplayHomeUp();
-        ViewModelFactory viewModelFactory = new ViewModelFactory(this);
-        medicinesListViewModel = new ViewModelProvider(this, viewModelFactory).get(MedicinesListViewModel.class);
+        mRepository = RepositoryImpl.getRepository(getApplication());
     }
 
     @Override
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     public void shouldDisplayHomeUp(){
         boolean canGoBack = getSupportFragmentManager().getBackStackEntryCount()>0;
-        getSupportActionBar().setDisplayHomeAsUpEnabled(canGoBack);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(canGoBack);
     }
 
     @Override
@@ -62,9 +62,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.clear_all:
-            medicinesListViewModel.deleteAll();
+        if (item.getItemId() == R.id.clear_all) {
+            mRepository.deleteAll();
         }
         return super.onOptionsItemSelected(item);
     }

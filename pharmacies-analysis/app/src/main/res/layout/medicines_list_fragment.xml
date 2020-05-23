@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import
+            alias="V"
+            type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.example.pharmacies_analysis.ui.main.MedicinesListViewModel" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -8,22 +20,32 @@
         tools:context=".ui.main.MedicinesList.MedicinesListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/medicinesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/medicinesList"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:clipToPadding="false"
-            android:paddingBottom="68dp" />
+            android:paddingBottom="68dp"
+            android:visibility="@{vm.isErrorVisible || vm.isEmpty ? V.GONE : V.VISIBLE}"
+            bind:clickHandler="@{vm.onItemClickListener}"
+            bind:data="@{vm.medicines}" />
 
         <TextView
+            android:id="@+id/empty_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/empty_list"
-            android:text="@string/empty_list"
             android:gravity="center"
-            android:background="@android:color/white"
-            android:visibility="gone" />
+            android:text="@string/empty_list"
+            android:visibility="@{vm.isEmpty ? V.VISIBLE : V.GONE}" />
+
+        <include
+            layout="@layout/loading"
+            bind:isLoadingVisible="@{vm.isLoading}" />
+
+        <include
+            layout="@layout/error"
+            bind:isErrorVisible="@{vm.isErrorVisible}" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

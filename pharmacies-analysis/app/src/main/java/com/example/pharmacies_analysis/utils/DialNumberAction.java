@@ -1,4 +1,4 @@
-package com.example.pharmacies_analysis.ui.main;
+package com.example.pharmacies_analysis.utils;
 
 import android.content.Intent;
 import android.net.Uri;

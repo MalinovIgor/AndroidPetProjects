@@ -31,7 +31,6 @@ import com.example.pharmacies_analysis.data.network.models.Location;
 import com.example.pharmacies_analysis.data.network.models.PharmaciesResponse;
 import com.example.pharmacies_analysis.data.network.models.Pharmacy;
 import com.example.pharmacies_analysis.databinding.PharmacyMapFragmentBinding;
-import com.example.pharmacies_analysis.ui.ViewModelFactory;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -84,8 +83,7 @@ public class PharmacyMapFragment extends Fragment implements OnMapReadyCallback,
                 mapSettingsBottomSheet.show(getChildFragmentManager(), mapSettingsBottomSheet.getTag());
             }
         });
-        ViewModelFactory viewModelFactory = new ViewModelFactory(getContext());
-        mViewModel = new ViewModelProvider(this, viewModelFactory).get(PharmacyMapViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(PharmacyMapViewModel.class);
         PharmacyMapFragmentPermissionsDispatcher.getLocationWithPermissionCheck(this);
         return pharmacyMapFragmentBinding.getRoot();
     }

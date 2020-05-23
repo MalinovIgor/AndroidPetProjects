@@ -1,13 +1,10 @@
 package com.example.pharmacies_analysis.ui.main.PharmacyMap;
 
 import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pharmacies_analysis.R;
 import com.example.pharmacies_analysis.data.network.models.Pharmacy;
 import com.example.pharmacies_analysis.databinding.PharmacyBottomSheetBinding;
+import com.example.pharmacies_analysis.utils.DialNumberAction;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class PharmacyBottomSheet extends BottomSheetDialogFragment {
@@ -46,7 +44,7 @@ public class PharmacyBottomSheet extends BottomSheetDialogFragment {
         pharmacyAdapter.setMedicinesList(pharmacy.getMedicines());
         recyclerView.setAdapter(pharmacyAdapter);
         pharmacyBottomSheetBinding.setPharmacy(pharmacy);
-        pharmacyBottomSheetBinding.setActions(new com.example.pharmacies_analysis.ui.main.DialNumberAction());
+        pharmacyBottomSheetBinding.setActions(new DialNumberAction());
         return pharmacyBottomSheetBinding.getRoot();
     }
 

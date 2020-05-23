@@ -1,7 +1,6 @@
 package com.example.pharmacies_analysis.ui.main.MedicinesList;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pharmacies_analysis.R;
 import com.example.pharmacies_analysis.data.db.Medicine;
 import com.example.pharmacies_analysis.databinding.MedicinesItemBinding;
-import com.example.pharmacies_analysis.databinding.SearchResultItemBinding;
+import com.example.pharmacies_analysis.ui.OnItemClickListener;
 
 import java.util.List;
 
@@ -65,8 +64,4 @@ public class MedicinesListAdapter extends RecyclerView.Adapter<MedicinesListAdap
         }
     }
 
-    public interface OnItemClickListener {
-
-        void onItemClick(Medicine medicine);
-    }
 }
